@@ -39,9 +39,6 @@ export KBUILD_BUILD_USER=MoChenYa
 export KBUILD_BUILD_HOST=GitHubCI
 
 msg() {
-	# echo
-	# echo -e "\e[1;32m$*\e[0m"
-	# echo
 }
 
 cd $WORKDIR
@@ -71,15 +68,15 @@ KERNEL_HEAD_HASH=$(git log --pretty=format:'%H' -1)
 # msg " • 🌸 KernelSU version: $KERNELSU_VERSION 🌸 "
 
 # PATCH KERNELSU
-# msg " • 🌸 Applying patches 🌸 "
+msg " • 🌸 Applying patches 🌸 "
 
-# apply_patchs () {
-# for patch_file in $WORKDIR/patchs/*.patch
-# 	do
-# 	patch -p1 < "$patch_file"
-# done
-# }
-# apply_patchs
+apply_patchs () {
+for patch_file in $WORKDIR/patchs/*.patch
+	do
+	patch -p1 < "$patch_file"
+done
+}
+apply_patchs
 
 # ENABLE KernelSU
 #echo -e "\n# KernelSU\nCONFIG_KSU=y" >> $DEVICE_DEFCONFIG_FILE
