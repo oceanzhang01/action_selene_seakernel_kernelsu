@@ -132,9 +132,9 @@ fi
 time=$(TZ='Asia/Shanghai' date +"%Y-%m-%d %H:%M:%S")
 shanghai_time=$(TZ='Asia/Shanghai' date +%Y%m%d%H)
 ZIP_NAME="selene-$KERNEL_VERSION-Sea-$SEA_KERNEL_VERSION-$shanghai_time-GithubCI"
-find ./ * -exec touch -m -d "$time" {} \;
-zip -r9 $ZIP_NAME.zip *
-cp *.zip $WORKDIR/out && cp $DTBO $WORKDIR/out
+# find ./ * -exec touch -m -d "$time" {} \;
+# zip -r9 $ZIP_NAME.zip *
+# cp *.zip $WORKDIR/out && cp $DTBO $WORKDIR/out
 
 # Packed Image
 # Setup magiskboot
