@@ -129,12 +129,12 @@ fi
 # echo "• Within KernelSU $KERNELSU_VERSION !!!" >> $WORKDIR/Anykernel3/banner
 
 # PACK FILE
-# time=$(TZ='Asia/Shanghai' date +"%Y-%m-%d %H:%M:%S")
-# shanghai_time=$(TZ='Asia/Shanghai' date +%Y%m%d%H)
-# ZIP_NAME="KernelSU-$KERNELSU_VERSION-ROSS-selene-$KERNEL_VERSION-Sea-$SEA_KERNEL_VERSION-$shanghai_time-GithubCI"
-# find ./ * -exec touch -m -d "$time" {} \;
-# zip -r9 $ZIP_NAME.zip *
-# cp *.zip $WORKDIR/out && cp $DTBO $WORKDIR/out
+time=$(TZ='Asia/Shanghai' date +"%Y-%m-%d %H:%M:%S")
+shanghai_time=$(TZ='Asia/Shanghai' date +%Y%m%d%H)
+ZIP_NAME="selene-$KERNEL_VERSION-Sea-$SEA_KERNEL_VERSION-$shanghai_time-GithubCI"
+find ./ * -exec touch -m -d "$time" {} \;
+zip -r9 $ZIP_NAME.zip *
+cp *.zip $WORKDIR/out && cp $DTBO $WORKDIR/out
 
 # Packed Image
 # Setup magiskboot
@@ -146,7 +146,6 @@ rm -rf magiskboot.7z
 # Download original boot.img
 aria2c -s16 -x16 -k1M $ORIGIN_BOOTIMG_DLINK -o magiskboot/boot.img
 cd $WORKDIR/magiskboot
-
 # Packing
 $MAGISKBOOT unpack -h boot.img
 cp $IMAGE ./Image.gz-dtb
