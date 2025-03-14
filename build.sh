@@ -37,15 +37,12 @@ DTBO="$KERNEL_DIR/out/arch/arm64/boot/dtbo.img"
 
 export KBUILD_BUILD_USER=MoChenYa
 export KBUILD_BUILD_HOST=GitHubCI
-msg() {
-echo $1
-}
 cd $WORKDIR
 
 # Download ZyClang
-msg " • 🌸 Work on $WORKDIR 🌸"
-msg " • 🌸 Cloning Toolchain 🌸 "
-msg " • 🌸 Donwload $ZYCLANG_DLINK 🌸 "
+echo " • 🌸 Work on $WORKDIR 🌸"
+echo " • 🌸 Cloning Toolchain 🌸 "
+echo " • 🌸 Donwload $ZYCLANG_DLINK 🌸 "
 mkdir -p ZyClang
 aria2c -s16 -x16 -k1M $ZYCLANG_DLINK -o ZyClang.tar.gz
 tar -C ZyClang/ -zxvf ZyClang.tar.gz
@@ -55,19 +52,19 @@ rm -rf ZyClang.tar.gz
 CLANG_VERSION="$($ZYCLANG_DIR/clang --version | head -n 1)"
 LLD_VERSION="$($ZYCLANG_DIR/ld.lld --version | head -n 1)"
 
-msg " • 🌸 Cloning Kernel Source 🌸 "
+echo " • 🌸 Cloning Kernel Source 🌸 "
 git clone --depth=1 $KERNEL_GIT -b $KERNEL_BRANCHE $KERNEL_DIR
 cd $KERNEL_DIR
 KERNEL_HEAD_HASH=$(git log --pretty=format:'%H' -1)
 
-# msg " • 🌸 Patching KernelSU 🌸 "
+# echo " • 🌸 Patching KernelSU 🌸 "
 # curl -LSs "https://raw.githubusercontent.com/tiann/KernelSU/main/kernel/setup.sh" | bash -
 # KSU_GIT_VERSION=$(cd KernelSU && git rev-list --count HEAD)
 # KERNELSU_VERSION=$(($KSU_GIT_VERSION + 10000 + 200))
-# msg " • 🌸 KernelSU version: $KERNELSU_VERSION 🌸 "
+# echo " • 🌸 KernelSU version: $KERNELSU_VERSION 🌸 "
 
 # PATCH KERNELSU
-msg " • 🌸 Applying patches 🌸 "
+echo " • 🌸 Applying patches 🌸 "
 
 apply_patchs () {
 for patch_file in $WORKDIR/patchs/*.patch
@@ -81,10 +78,10 @@ apply_patchs
 #echo -e "\n# KernelSU\nCONFIG_KSU=y" >> $DEVICE_DEFCONFIG_FILE
 
 #sed -i "/CONFIG_LOCALVERSION=\"/s/.$/$SEA_KERNEL_CODENAME_ESCAPE-KSU-$KERNELSU_VERSION\"/" $DEVICE_DEFCONFIG_FILE
-# msg " • 🌸 $(grep 'CONFIG_LOCALVERSION=' $DEVICE_DEFCONFIG_FILE) 🌸 "
+# echo " • 🌸 $(grep 'CONFIG_LOCALVERSION=' $DEVICE_DEFCONFIG_FILE) 🌸 "
 
 # BUILD KERNEL
-msg " • 🌸 Started Compilation 🌸 "
+echo " • 🌸 Started Compilation 🌸 "
 
 mkdir -p $WORKDIR/out
 
@@ -113,16 +110,16 @@ LLVM=1"
 rm -rf out
 make O=out $args $DEVICE_DEFCONFIG
 KERNEL_VERSION=$(make O=out $args kernelversion | grep "4.14")
-msg " • 🌸 LINUX KERNEL VERSION : $KERNEL_VERSION 🌸 "
+echo " • 🌸 LINUX KERNEL VERSION : $KERNEL_VERSION 🌸 "
 make O=out $args -j"$(nproc --all)" | tee "$WORKDIR/out/Build.log"
 
-msg " • 🌸 Checking builds 🌸 "
+echo " • 🌸 Checking builds 🌸 "
 if [ ! -e $IMAGE ]; then
     echo -e " • 🌸 \033[31mBuild Failed!\033[0m"
     exit 1
 fi
 
-# msg " • 🌸 Packing Kernel 🌸 "
+# echo " • 🌸 Packing Kernel 🌸 "
 # cd $WORKDIR
 # git clone --depth=1 $ANYKERNEL3_GIT -b $ANYKERNEL3_BRANCHE $WORKDIR/Anykernel3
 # cd $WORKDIR/Anykernel3
@@ -186,4 +183,4 @@ cat RELEASE.md
 cat KSU_VERSION.txt
 cat KERNEL_VERSION.txt
 cat KERNEL_HEAD_HASH.txt
-msg "• 🌸 Done! 🌸 "
+echo "• 🌸 Done! 🌸 "
