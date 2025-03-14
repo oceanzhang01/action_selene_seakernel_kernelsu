@@ -39,9 +39,9 @@ export KBUILD_BUILD_USER=MoChenYa
 export KBUILD_BUILD_HOST=GitHubCI
 
 msg() {
-	echo
-	echo -e "\e[1;32m$*\e[0m"
-	echo
+	# echo
+	# echo -e "\e[1;32m$*\e[0m"
+	# echo
 }
 
 cd $WORKDIR
