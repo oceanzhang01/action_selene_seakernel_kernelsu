@@ -16,7 +16,8 @@ jobs:
         run: |
           cd $GITHUB_WORKSPACE
           sudo bash env.sh
-
+      - name: Remove carriage returns
+        run: sed -i 's/\r$//' build.sh
       - name: 🌊 Start building...
         run: |
           cd $GITHUB_WORKSPACE
